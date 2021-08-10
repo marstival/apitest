@@ -24,10 +24,10 @@ router.get('/balance', async (req: Request, res: Response) => {
 
   const param: string = req.query.account_id as string;
 
-  console.log('/balance ');
+  console.log('/balance');
   console.log(req.query);
 
-  let acc: Account = balance(parseInt(param));
+  let acc: Account = balance(param);
 
   if (acc) {
     res.status(200).send(acc.balance.toString());
@@ -39,21 +39,20 @@ router.get('/balance', async (req: Request, res: Response) => {
 router.post('/event', async (req: Request, res: Response) => {
   const { type, destination, origin, amount } = req.body;
   console.log(req.body);
-  let dest_id = parseInt(destination);
-  let orig_id = parseInt(origin);
+
   try {
     if (type == 'deposit') {
-      let acc: Account = deposit(dest_id, amount);
+      let acc: Account = deposit(destination, amount);
       res.status(201).send({ destination: acc });
     }
 
     if (type == 'withdraw') {
-      let acc = withdraw(orig_id, amount);
+      let acc = withdraw(origin, amount);
       res.status(201).send({ origin: acc });
     }
 
     if (type == 'transfer') {
-      let result = transfer(orig_id, dest_id, amount);
+      let result = transfer(origin, destination, amount);
 
       res
         .status(201)

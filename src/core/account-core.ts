@@ -3,17 +3,17 @@
 import { InvalidAccountException } from '../errors/invalid-account';
 import { Account } from './account-model';
 
-let accounts: { [id: number]: Account } = {}; //100: {id:100, balance:10}
+let accounts: { [id: string]: Account } = {}; //100: {id:100, balance:10}
 
 export function reset(): void {
   accounts = {};
 }
 
-export function balance(param: number): Account {
+export function balance(param: string): Account {
   return accounts[param];
 }
 
-export function deposit(dest_id: number, amount: number): Account {
+export function deposit(dest_id: string, amount: number): Account {
   let acc = accounts[dest_id];
   if (acc) {
     //existing account
@@ -24,7 +24,7 @@ export function deposit(dest_id: number, amount: number): Account {
   }
   return accounts[dest_id];
 }
-export function withdraw(orig_id: number, amount: number): Account {
+export function withdraw(orig_id: string, amount: number): Account {
   let acc = accounts[orig_id];
   if (acc) {
     //existing account
@@ -36,8 +36,8 @@ export function withdraw(orig_id: number, amount: number): Account {
   }
 }
 export function transfer(
-  orig_id: number,
-  dest_id: number,
+  orig_id: string,
+  dest_id: string,
   amount: number
 ): { destination: Account; origin: Account } {
   let origin = accounts[orig_id];
